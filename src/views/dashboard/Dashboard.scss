@@ -1,0 +1,221 @@
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$text-color: #333;
+$background-color: #f0f2f5;
+$card-background: #fff;
+$border-radius: 8px;
+$box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// General styles
+.dashboard {
+  padding: 20px;
+  background-color: $background-color;
+
+  &__header {
+    margin-bottom: 20px;
+    h1 {
+      font-size: 24px;
+      color: $text-color;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+.dashboard-card {
+  background-color: $card-background;
+  border-radius: $border-radius;
+  padding: 20px;
+  box-shadow: $box-shadow;
+
+  h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: $text-color;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+  }
+}
+
+// TotalSales styles
+.total-sales {
+  .total-amount {
+    font-size: 24px;
+    font-weight: bold;
+    color: $primary-color;
+    margin-bottom: 5px;
+  }
+
+  .chart-container {
+    height: 100px;
+    margin-top: 15px;
+  }
+}
+
+// Customers styles
+.customers {
+  .customer-count {
+    font-size: 24px;
+    font-weight: bold;
+    color: $secondary-color;
+    margin-bottom: 5px;
+  }
+
+  .chart-container {
+    height: 100px;
+    margin-top: 15px;
+  }
+}
+
+// Orders styles
+.orders {
+  .order-count {
+    font-size: 24px;
+    font-weight: bold;
+    color: $primary-color;
+    margin-bottom: 10px;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 10px;
+
+    .progress {
+      height: 100%;
+      background-color: $secondary-color;
+      border-radius: 4px;
+    }
+  }
+
+  .goal {
+    font-size: 12px;
+    color: #888;
+  }
+}
+
+// BestSelling styles
+.best-selling {
+  grid-column: span 2;
+
+  .total-sales {
+    font-size: 24px;
+    font-weight: bold;
+    color: $primary-color;
+    margin-bottom: 5px;
+  }
+
+  .chart-container {
+    height: 200px;
+    margin: 20px 0;
+  }
+
+  .legend {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 15px;
+
+    li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+      font-size: 14px;
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+// RecentOrders styles
+.recent-orders {
+  grid-column: span 2;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .view-all {
+      background: none;
+      border: none;
+      color: $primary-color;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+      font-weight: bold;
+      color: $text-color;
+    }
+
+    .status {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+
+      &.processing {
+        background-color: #fff8e1;
+        color: #ffa000;
+      }
+
+      &.completed {
+        background-color: #e8f5e9;
+        color: #4caf50;
+      }
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 1200px) {
+  .dashboard__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .best-selling, .recent-orders {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .best-selling, .recent-orders {
+    grid-column: span 1;
+  }
+}

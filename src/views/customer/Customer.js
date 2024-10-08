@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Customer.scss';
 
-const customerData = [
-  { id: 'EH', name: 'Nguyễn Minh Anh', email: 'nguyenminhanh@gmail.com', address: '123 Đường Trần Hưng Đạo, Quận 1, TP. Hồ Chí Minh' },
-  { id: 'WW', name: 'Trần Quang Huy', email: 'tranquanghuy@yahoo.com', address: '456 Đường Nguyễn Trãi, Quận Thanh Xuân, Hà Nội' },
-  { id: 'BS', name: 'Lê Ngọc Lan', email: 'lengoclan@hotmail.com', address: '789 Đường Lê Lợi, Quận Hải Châu, Đà Nẵng' },
-  { id: 'RF', name: 'Phạm Bảo Châu', email: 'phambaobaochau@outlook.com', address: '101 Đường Lý Thường Kiệt, Quận 10, TP. Hồ Chí Minh' },
-  { id: 'DR', name: 'Hoàng Hải Đăng', email: 'hoanghai.dang@fpt.edu.vn', address: '202 Đường Trần Phú, Quận Hà Đông, Hà Nội' },
-  { id: 'RE', name: 'Vũ Thu Hà', email: 'vuthuha@gmail.com', address: '303 Đường Hùng Vương, Quận Ninh Kiều, Cần Thơ' },
-  { id: 'TW', name: 'Đặng Thanh Tùng', email: 'dangthanhtung@outlook.com', address: '404 Đường Lê Văn Việt, Quận 9, TP. Hồ Chí Minh' },
-  { id: 'AM', name: 'Phan Diệu Linh', email: 'phandieu.linh@yahoo.com', address: '505 Đường Lê Lợi, Quận Hải Châu, Đà Nẵng' },
-];
-
 const Customer = () => {
+  const [customers, setCustomers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // Số khách hàng trên mỗi trang
+  const itemsPerPage = 4;
 
-  // Tính toán các khách hàng hiển thị dựa trên trang hiện tại
+  useEffect(() => {
+    // Gọi API lấy dữ liệu khách hàng
+    fetch('https://localhost:7249/api/customer') // Đường dẫn API
+      .then((response) => response.json())
+      .then((data) => setCustomers(data))
+      .catch((error) => console.error('Error fetching customer data:', error));
+  }, []);
+
   const indexOfLastCustomer = currentPage * itemsPerPage;
   const indexOfFirstCustomer = indexOfLastCustomer - itemsPerPage;
-  const currentCustomers = customerData.slice(indexOfFirstCustomer, indexOfLastCustomer);
+  const currentCustomers = customers.slice(indexOfFirstCustomer, indexOfLastCustomer);
 
-  // Xử lý chuyển trang
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -46,7 +42,7 @@ const Customer = () => {
           {currentCustomers.map((customer) => (
             <tr key={customer.id}>
               <td>
-                <div className="customer-icon">{customer.id}</div>
+                <div className="customer-icon">{customer.initials}</div>
               </td>
               <td>{customer.name}</td>
               <td>{customer.email}</td>

@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Product.scss';
 
-const productData = [
-  { id: 'DC0001', name: 'Dây chuyền - DC0001', price: '100.000đ', stock: 'In Stock', category: 'Dây chuyền', image: '/images/product_images/dc001.jpg' },
-  { id: 'DC0002', name: 'Dây chuyền - DC0002', price: '35.000đ', stock: 'In Stock', category: 'Dây chuyền', image: '/images/product_images/dc002.jpg' },
-  { id: 'N0001', name: 'Nhẫn - N0001', price: '27.000đ', stock: 'In Stock', category: 'Nhẫn', image: '/images/product_images/n001.jpg' },
-  { id: 'DC0003', name: 'Dây chuyền - DC0003', price: '22.000đ', stock: 'In Stock', category: 'Dây chuyền', image: '/images/product_images/dc003.jpg' },
-  { id: 'UD0001', name: 'UTRAANET Black - UD0001', price: '43.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud001.jpg' },
-  { id: 'N0002', name: 'Nhẫn - N0002', price: '35.000đ', stock: 'In Stock', category: 'Nhẫn', image: '/images/product_images/n002.jpg' },
-  { id: 'DC0004', name: 'Dây chuyền - DC0004', price: '57.000đ', stock: 'In Stock', category: 'Dây chuyền', image: '/images/product_images/dc004.jpg' },
-  { id: 'UD0002', name: 'MOCKUP Black - UD0002', price: '30.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud002.jpg' },
-];
-
 const Product = () => {
+  const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
+  useEffect(() => {
+    // Gọi API lấy dữ liệu sản phẩm
+    fetch('https://localhost:7249/api/Product') // Đường dẫn API
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .catch((error) => console.error('Error fetching product data:', error));
+  }, []);
+
+  // Tính toán các sản phẩm hiển thị dựa trên trang hiện tại
   const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
-  const currentProducts = productData.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
+  // Xử lý chuyển trang
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -51,7 +51,7 @@ const Product = () => {
                 </div>
               </td>
               <td>{product.name}</td>
-              <td>{product.id}</td>
+              <td>{product.sku}</td>
               <td>{product.price}</td>
               <td>{product.stock}</td>
               <td>{product.category}</td>

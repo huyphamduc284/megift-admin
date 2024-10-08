@@ -1,24 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Review.scss';
 
-const reviewData = [
-  { id: 'EH', name: 'Nguyễn Minh Anh', review: 'Đa dạng sản phẩm, dịch vụ khách hàng tốt, giao hàng nhanh.' },
-  { id: 'WW', name: 'Trần Quang Huy', review: 'Thiết kế tinh tế, chất lượng tốt, giá cả phải chăng.' },
-  { id: 'BS', name: 'Lê Ngọc Lan', review: 'Đa dạng sản phẩm, dịch vụ khách hàng tốt, giao hàng nhanh.' },
-  { id: 'RF', name: 'Phạm Bảo Châu', review: 'Giao diện đẹp, sản phẩm đa dạng, chăm sóc khách hàng tốt, giao hàng nhanh.' },
-  { id: 'DR', name: 'Hoàng Hải Đăng', review: 'Đa dạng sản phẩm, dịch vụ khách hàng tốt, giao hàng nhanh.' },
-  { id: 'RE', name: 'Vũ Thu Hà', review: 'Mẫu mã đa dạng, giá cả hợp lý, dịch vụ tốt.' },
-  { id: 'TW', name: 'Đặng Thanh Tùng', review: 'Sản phẩm cao cấp, thiết kế đẹp, dịch vụ khách hàng tốt, giá cao.' },
-  { id: 'AM', name: 'Phan Diệu Linh', review: 'Giao diện đẹp, sản phẩm đa dạng, chăm sóc khách hàng tốt, giao hàng nhanh.' },
-];
-
 const Review = () => {
+  const [reviews, setReviews] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
+  useEffect(() => {
+    // Gọi API lấy dữ liệu đánh giá
+    fetch('https://localhost:7249/api/review') // Đường dẫn API
+      .then((response) => response.json())
+      .then((data) => setReviews(data))
+      .catch((error) => console.error('Error fetching review data:', error));
+  }, []);
+
   const indexOfLastReview = currentPage * itemsPerPage;
   const indexOfFirstReview = indexOfLastReview - itemsPerPage;
-  const currentReviews = reviewData.slice(indexOfFirstReview, indexOfLastReview);
+  const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -43,7 +41,7 @@ const Review = () => {
           {currentReviews.map((review) => (
             <tr key={review.id}>
               <td>
-                <div className="review-icon">{review.id}</div>
+                <div className="review-icon">{review.initials}</div>
               </td>
               <td>{review.name}</td>
               <td>{review.review}</td>

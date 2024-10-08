@@ -1,0 +1,128 @@
+.customer-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+
+    .customer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      h1 {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .search-container {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        padding: 5px 10px;
+
+        input {
+          border: none;
+          outline: none;
+          margin-left: 5px;
+        }
+      }
+    }
+
+    .customer-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      .customer-icon {
+        width: 40px;
+        height: 40px;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        font-weight: bold;
+        color: #555;
+      }
+
+      th, td {
+        text-align: left;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+      }
+
+      th {
+        font-weight: bold;
+        color: #666;
+      }
+
+      .action-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+      }
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+
+      button {
+        margin: 0 5px;
+        padding: 8px 14px; /* Tăng kích thước cho nút */
+        border: none;
+        background-color: transparent; /* Làm cho nền trong suốt */
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        color: #666; /* Màu chữ nhạt hơn */
+        border-radius: 8px; /* Bo tròn các góc cho nút */
+        transition: background-color 0.3s ease, color 0.3s ease;
+
+        &:hover {
+          background-color: #f0f0f0; /* Màu nền khi hover */
+          color: #000; /* Màu chữ khi hover */
+        }
+
+        &.active {
+          background-color: #fff; /* Nền trắng cho nút đang active */
+          color: #000; /* Màu chữ đậm hơn */
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ */
+        }
+
+        &:disabled {
+          cursor: not-allowed; /* Khi nút bị vô hiệu hóa */
+          color: #ccc; /* Màu chữ nhạt hơn */
+        }
+      }
+
+      .dots {
+        margin: 0 10px;
+        font-size: 18px;
+        color: #666;
+      }
+
+      /* Cải thiện các nút trái và phải */
+      .prev-next {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 18px;
+        color: #666;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #000; /* Màu khi hover */
+        }
+
+        &:disabled {
+          color: #ccc;
+        }
+      }
+    }
+}

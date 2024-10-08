@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Product.scss';
 
 const productData = [
@@ -10,21 +10,18 @@ const productData = [
   { id: 'N0002', name: 'Nhẫn - N0002', price: '35.000đ', stock: 'In Stock', category: 'Nhẫn', image: '/images/product_images/n002.jpg' },
   { id: 'DC0004', name: 'Dây chuyền - DC0004', price: '57.000đ', stock: 'In Stock', category: 'Dây chuyền', image: '/images/product_images/dc004.jpg' },
   { id: 'UD0002', name: 'MOCKUP Black - UD0002', price: '30.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud002.jpg' },
-  { id: 'UD0002', name: 'MOCKUP Black - UD0002', price: '30.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud002.jpg' },
-
-  
-  { id: 'UD0002', name: 'MOCKUP Black - UD0002', price: '30.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud002.jpg' },
-  { id: 'UD0002', name: 'MOCKUP Black - UD0002', price: '30.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud002.jpg' },
-  { id: 'UD0002', name: 'MOCKUP Black - UD0002', price: '30.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud002.jpg' },
-  { id: 'UD0002', name: 'MOCKUP Black - UD0002', price: '30.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud002.jpg' },
-  { id: 'UD0002', name: 'MOCKUP Black - UD0002', price: '30.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud002.jpg' },
-  { id: 'UD0002', name: 'MOCKUP Black - UD0002', price: '30.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud002.jpg' },
-  { id: 'UD0002', name: 'MOCKUP Black - UD0002', price: '30.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud002.jpg' },
-  { id: 'UD0002', name: 'MOCKUP Black - UD0002', price: '30.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud002.jpg' },
-  { id: 'UD0002', name: 'MOCKUP Black - UD0002', price: '30.000đ', stock: 'In Stock', category: 'Khác', image: '/images/product_images/ud002.jpg' },
 ];
 
 const Product = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+
+  const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  const currentProducts = productData.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="product-container">
       <div className="product-header">
@@ -46,7 +43,7 @@ const Product = () => {
           </tr>
         </thead>
         <tbody>
-          {productData.map((product) => (
+          {currentProducts.map((product) => (
             <tr key={product.id}>
               <td>
                 <div className="product-image">
@@ -66,13 +63,35 @@ const Product = () => {
         </tbody>
       </table>
       <div className="pagination">
-        <button>&lt;</button>
-        <button className="active">1</button>
-        <button>2</button>
-        <span>...</span>
-        <button>23</button>
-        <button>24</button>
-        <button>&gt;</button>
+        <button
+          className="prev-next"
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          &lt;
+        </button>
+        <button
+          className={currentPage === 1 ? 'active' : ''}
+          onClick={() => paginate(1)}
+        >
+          1
+        </button>
+        <button
+          className={currentPage === 2 ? 'active' : ''}
+          onClick={() => paginate(2)}
+        >
+          2
+        </button>
+        <span className="dots">...</span>
+        <button onClick={() => paginate(23)}>23</button>
+        <button onClick={() => paginate(24)}>24</button>
+        <button
+          className="prev-next"
+          onClick={() => paginate(currentPage + 1)}
+          disabled={currentPage === 24}
+        >
+          &gt;
+        </button>
       </div>
     </div>
   );

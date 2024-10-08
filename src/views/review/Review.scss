@@ -1,8 +1,8 @@
-.product-container {
+.review-container {
   font-family: Arial, sans-serif;
   padding: 20px;
 
-  .product-header {
+  .review-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,21 +28,20 @@
     }
   }
 
-  .product-table {
+  .review-table {
     width: 100%;
     border-collapse: collapse;
 
-    .product-image {
+    .review-icon {
       width: 40px;
       height: 40px;
-      overflow: hidden;
-      border-radius: 5px;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      font-weight: bold;
+      color: #555;
     }
 
     th, td {

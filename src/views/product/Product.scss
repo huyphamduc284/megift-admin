@@ -1,0 +1,121 @@
+.product-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+
+  .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      padding: 5px 10px;
+
+      input {
+        border: none;
+        outline: none;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .product-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    .product-image {
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      border-radius: 5px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      font-weight: bold;
+      color: #666;
+    }
+
+    .action-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    button {
+      margin: 0 5px;
+      padding: 8px 14px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      color: #666;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+
+      &:hover {
+        background-color: #f0f0f0;
+        color: #000;
+      }
+
+      &.active {
+        background-color: #fff;
+        color: #000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        color: #ccc;
+      }
+    }
+
+    .dots {
+      margin: 0 10px;
+      font-size: 18px;
+      color: #666;
+    }
+
+    .prev-next {
+      font-size: 18px;
+      color: #666;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #000;
+      }
+
+      &:disabled {
+        color: #ccc;
+      }
+    }
+  }
+}

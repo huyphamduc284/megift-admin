@@ -8,6 +8,7 @@ const Review = React.lazy(() => import('./views/review/Review'));
 const Customer = React.lazy(() => import('./views/customer/Customer'));
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
+const Settings = React.lazy(() => import('./views/setting/Settings'))
 
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
@@ -64,6 +65,7 @@ const routes = [
   { path: '/add-product', name: 'Add Product', element: AddProduct},
   { path: '/review', name: 'Review', element: Review},
   { path: '/customer', name: 'Review', element: Customer},
+  {path: '/setting',name:'Settings', element: Settings},
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },

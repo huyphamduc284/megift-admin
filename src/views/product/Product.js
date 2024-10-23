@@ -1,37 +1,38 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Plus } from 'lucide-react';
 import './Product.scss';
 
 const Product = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // Number of products per page
+  const itemsPerPage = 4;
 
   useEffect(() => {
-    // Fetch product data from API
     fetch('https://localhost:7249/api/Product')
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error('Error fetching product data:', error));
   }, []);
 
-  // Calculate the total number of pages
   const totalPages = Math.ceil(products.length / itemsPerPage);
-
-  // Get the current products to display
   const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
   const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // Render pagination buttons dynamically
+  const handleAddProduct = () => {
+    navigate('/add-product');
+  };
+
   const renderPaginationButtons = () => {
     const buttons = [];
-    const siblingCount = 1; // Number of pages to show around the current page
-    const totalNumbersToShow = siblingCount * 2 + 3; // Pages around the current, including the first/last
+    const siblingCount = 1;
+    const totalNumbersToShow = siblingCount * 2 + 3;
     
     if (totalPages <= totalNumbersToShow) {
-      // Display all pages if total is less than the number we want to display
       for (let i = 1; i <= totalPages; i++) {
         buttons.push(
           <button
@@ -44,7 +45,6 @@ const Product = () => {
         );
       }
     } else {
-      // Show the first page
       buttons.push(
         <button
           key={1}
@@ -55,12 +55,10 @@ const Product = () => {
         </button>
       );
 
-      // Ellipses before the range
       if (currentPage > siblingCount + 2) {
         buttons.push(<span key="start-ellipsis" className="dots">...</span>);
       }
 
-      // Show pages around the current page
       const startPage = Math.max(2, currentPage - siblingCount);
       const endPage = Math.min(totalPages - 1, currentPage + siblingCount);
 
@@ -76,12 +74,10 @@ const Product = () => {
         );
       }
 
-      // Ellipses after the range
       if (currentPage < totalPages - siblingCount - 1) {
         buttons.push(<span key="end-ellipsis" className="dots">...</span>);
       }
 
-      // Show the last page
       buttons.push(
         <button
           key={totalPages}
@@ -100,8 +96,17 @@ const Product = () => {
     <div className="product-container">
       <div className="product-header">
         <h1>Products</h1>
-        <div className="search-container">
-          <input type="text" placeholder="Search products" />
+        <div className="header-actions">
+          <div className="search-container">
+            <input type="text" placeholder="Search products" />
+          </div>
+          <button 
+            onClick={handleAddProduct}
+            className="add-button"
+          >
+            <Plus className="icon" />
+            Add Product
+          </button>
         </div>
       </div>
       <table className="product-table">

@@ -125,4 +125,19 @@
         }
       }
     }
+    .customer-image {
+      width: 50px;  // Set a fixed width
+      height: 50px; // Set a fixed height
+      border-radius: 50%;  // This will make the image round
+      overflow: hidden;  // Ensure the image doesn't overflow the container
+    }
+    
+    .customer-image img {
+      width: 100%;  // Make sure the image takes up the full width of the container
+      height: 100%; // Make sure the image takes up the full height of the container
+      object-fit: cover;  // Ensure the image retains its aspect ratio and fills the container
+    }
+    
 }
+
+

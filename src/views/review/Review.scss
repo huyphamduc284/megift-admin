@@ -117,4 +117,17 @@
       }
     }
   }
+
+  .review-image {
+    width: 50px;  // Set a fixed width for the review image
+    height: 50px; // Set a fixed height for the review image
+    border-radius: 50%;  // This will make the image round
+    overflow: hidden;  // Ensure the image doesn't overflow the container
+  }
+  
+  .review-image img {
+    width: 100%;  // Make sure the image takes up the full width of the container
+    height: 100%; // Make sure the image takes up the full height of the container
+    object-fit: cover;  // Ensure the image retains its aspect ratio and fills the container
+  }
 }

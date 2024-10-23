@@ -1,19 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Order.scss';
 
-
-const orderData = [
-  { id: 'DC0001', name: 'Dây chuyền - DC0001', date: '20 Mar, 2024', total: '520.000đ', status: 'Processing', image: '/images/order_images/dc001.jpg' },
-  { id: 'DC0002', name: 'Dây chuyền - DC0002', date: '19 Mar, 2024', total: '130.000đ', status: 'Processing', image: '/images/order_images/dc002.jpg' },
-  { id: 'N0001', name: 'Nhẫn - N0001', date: '7 Feb, 2024', total: '420.000đ', status: 'Completed', image: '/images/order_images/dc003.jpg' },
-  { id: 'DC0003', name: 'Dây chuyền - DC0003', date: '29 Jan, 2024', total: '720.000đ', status: 'Completed', image: '/images/order_images/dc004.jpg' },
-  { id: 'UD0001', name: 'UTRANET Black - UD0001', date: '27 Jan, 2024', total: '150.000đ', status: 'Processing', image: '/images/order_images/box1.jpg' },
-  { id: 'N0002', name: 'Nhẫn - N0002', date: '4 Jan, 2024', total: '200.000đ', status: 'Cancelled', image: '/images/order_images/dc003.jpg' },
-  { id: 'DC0004', name: 'Dây chuyền - DC0004', date: '28 Dec, 2024', total: '670.000đ', status: 'Completed', image: '/images/order_images/dc002.jpg' },
-  { id: 'UD0002', name: 'MOCKUP Black - UD0002', date: '20 Dec, 2024', total: '150.000đ', status: 'Processing', image: '/images/order_images/box1.jpg' },
-];
-
 const Order = () => {
+  const [orders, setOrders] = useState([]); // State to hold all fetched orders
+  const [currentPage, setCurrentPage] = useState(1); // State to track the current page
+  const [loading, setLoading] = useState(true); // State to manage loading state
+  const [error, setError] = useState(null); // State to manage error state
+  const itemsPerPage = 8; // Items per page
+
+  useEffect(() => {
+    // Fetch order data from API
+    fetch('https://localhost:7249/api/Order') // Replace this with your API URL
+      .then((response) => response.json())
+      .then((data) => {
+        setOrders(data); // Set the fetched orders to state
+        setLoading(false); // Set loading to false after data is fetched
+      })
+      .catch((error) => {
+        setError('Error fetching orders');
+        setLoading(false); // Set loading to false in case of error
+      });
+  }, []);
+
+  // Pagination logic
+  const indexOfLastOrder = currentPage * itemsPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - itemsPerPage;
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+  const totalPages = Math.ceil(orders.length / itemsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  if (loading) {
+    return <div>Loading orders...</div>; // Show loading message while fetching data
+  }
+
+  if (error) {
+    return <div>{error}</div>; // Show error message if the API request fails
+  }
+
   return (
     <div className="order-container">
       <div className="order-header">
@@ -25,7 +49,6 @@ const Order = () => {
       <table className="order-table">
         <thead>
           <tr>
-            <th></th>
             <th>Order</th>
             <th>Date</th>
             <th>Total</th>
@@ -34,14 +57,9 @@ const Order = () => {
           </tr>
         </thead>
         <tbody>
-          {orderData.map((order) => (
+          {currentOrders.map((order) => (
             <tr key={order.id}>
-              <td>
-                <div className="order-image">
-                  <img src={order.image} alt={order.name} />
-                </div>
-              </td>
-              <td>{order.name}</td>
+              <td>{order.productName}</td>
               <td>{order.date}</td>
               <td>{order.total}</td>
               <td>
@@ -57,13 +75,32 @@ const Order = () => {
         </tbody>
       </table>
       <div className="pagination">
-        <button>&lt;</button>
-        <button className="active">1</button>
-        <button>2</button>
-        <span>...</span>
-        <button>23</button>
-        <button>24</button>
-        <button>&gt;</button>
+        <button
+          className="prev-next"
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          &lt;
+        </button>
+
+        {/* Dynamically render pagination buttons */}
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index + 1}
+            className={currentPage === index + 1 ? 'active' : ''}
+            onClick={() => paginate(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+
+        <button
+          className="prev-next"
+          onClick={() => paginate(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          &gt;
+        </button>
       </div>
     </div>
   );

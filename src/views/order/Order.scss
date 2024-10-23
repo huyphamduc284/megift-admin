@@ -99,16 +99,52 @@
   
       button {
         margin: 0 5px;
-        padding: 5px 10px;
-        border: 1px solid #ccc;
-        background-color: white;
+        padding: 8px 14px;
+        border: none;
+        background-color: transparent;
         cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        color: #666;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+  
+        &:hover {
+          background-color: #f0f0f0;
+          color: #000;
+        }
   
         &.active {
-          background-color: #1890ff;
-          color: white;
-          border-color: #1890ff;
+          background-color: #fff;
+          color: #000;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+  
+        &:disabled {
+          cursor: not-allowed;
+          color: #ccc;
+        }
+      }
+  
+      .dots {
+        margin: 0 10px;
+        font-size: 18px;
+        color: #666;
+      }
+  
+      .prev-next {
+        font-size: 18px;
+        color: #666;
+        transition: color 0.3s ease;
+  
+        &:hover {
+          color: #000;
+        }
+  
+        &:disabled {
+          color: #ccc;
         }
       }
     }
+    
   }

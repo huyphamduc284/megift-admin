@@ -1,5 +1,7 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
+import productIcon from './assets/images/product-icon.png'
+import dashboardIcon from './assets/images/dashboard-icon.png'
 import {
   cilChartPie,
   cilCart,
@@ -15,13 +17,13 @@ const _nav = [
     component: CNavItem,
     name: 'Dashboard',
     to: '/dashboard',
-    icon: <CIcon icon={cilApplications} customClassName="nav-icon" />,
+    icon: <img src={dashboardIcon} alt="Dashboard" className="nav-icon" style={{ width: '30px', height: '30px' }} />,
   },
   {
     component: CNavItem,
     name: 'Products',
     to: '/product',
-    icon: <CIcon icon={cilBoltCircle} customClassName="nav-icon" />,
+    icon: <img src={productIcon} alt="Products" className="nav-icon" style={{ width: '20px', height: '20px' }} />,
   },
   {
     component: CNavItem,
@@ -41,12 +43,12 @@ const _nav = [
     to: '/review',
     icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
   },
-  {
-    component: CNavItem,
-    name: 'Settings',
-    to: '/setting',
-    icon: <CIcon icon={cilSettings} customClassName="nav-icon" />,
-  }
+  // {
+  //   component: CNavItem,
+  //   name: 'Settings',
+  //   to: '/setting',
+  //   icon: <CIcon icon={cilSettings} customClassName="nav-icon" />,
+  // }
 ]
 
 export default _nav

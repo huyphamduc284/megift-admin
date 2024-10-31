@@ -2,27 +2,26 @@ import React, { useState, useEffect } from 'react';
 import './Order.scss';
 
 const Order = () => {
-  const [orders, setOrders] = useState([]); // State to hold all fetched orders
-  const [currentPage, setCurrentPage] = useState(1); // State to track the current page
-  const [loading, setLoading] = useState(true); // State to manage loading state
-  const [error, setError] = useState(null); // State to manage error state
-  const itemsPerPage = 8; // Items per page
+  const [orders, setOrders] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [expandedOrderId, setExpandedOrderId] = useState(null);
+  const itemsPerPage = 8;
 
   useEffect(() => {
-    // Fetch order data from API
-    fetch('https://localhost:7249/api/Order') // Replace this with your API URL
+    fetch('https://localhost:7249/api/Orders')
       .then((response) => response.json())
       .then((data) => {
-        setOrders(data); // Set the fetched orders to state
-        setLoading(false); // Set loading to false after data is fetched
+        setOrders(data);
+        setLoading(false);
       })
       .catch((error) => {
         setError('Error fetching orders');
-        setLoading(false); // Set loading to false in case of error
+        setLoading(false);
       });
   }, []);
 
-  // Pagination logic
   const indexOfLastOrder = currentPage * itemsPerPage;
   const indexOfFirstOrder = indexOfLastOrder - itemsPerPage;
   const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
@@ -30,47 +29,71 @@ const Order = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  if (loading) {
-    return <div>Loading orders...</div>; // Show loading message while fetching data
-  }
+  const toggleOrderDetails = (orderId) => {
+    setExpandedOrderId(expandedOrderId === orderId ? null : orderId);
+  };
 
-  if (error) {
-    return <div>{error}</div>; // Show error message if the API request fails
-  }
+  if (loading) return <div>Loading orders...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="order-container">
       <div className="order-header">
         <h1>Orders</h1>
-        <div className="search-container">
-          <input type="text" placeholder="Search orders" />
-        </div>
       </div>
       <table className="order-table">
         <thead>
           <tr>
-            <th>Order</th>
+            <th>Customer</th>
             <th>Date</th>
             <th>Total</th>
             <th>Status</th>
-            <th>Action</th>
+            <th>Type</th>
           </tr>
         </thead>
         <tbody>
           {currentOrders.map((order) => (
-            <tr key={order.id}>
-              <td>{order.productName}</td>
-              <td>{order.date}</td>
-              <td>{order.total}</td>
-              <td>
-                <span className={`status ${order.status.toLowerCase()}`}>
-                  {order.status}
-                </span>
-              </td>
-              <td>
-                <button className="action-button">...</button>
-              </td>
-            </tr>
+            <React.Fragment key={order.orderId}>
+              <tr
+                className="order-row"
+                onClick={() => toggleOrderDetails(order.orderId)}
+              >
+                <td>{order.customer}</td>
+                <td>{new Date(order.orderDate).toLocaleDateString()}</td>
+                <td>{order.totalAmount}</td>
+                <td>
+                  <span className={`status ${order.orderStatus.toLowerCase()}`}>
+                    {order.orderStatus}
+                  </span>
+                </td>
+                <td>{order.orderType}</td>
+              </tr>
+              {expandedOrderId === order.orderId && (
+                <tr className="order-details-row">
+                  <td colSpan="6">
+                    <div className="order-details-container">
+                      <h3>Order Details</h3>
+                      <div className="order-details-rows">
+                        {order.orderDetails.map((detail) => (
+                          <div key={detail.productId} className="order-detail-row">
+                            <img
+                              src={detail.productImage}
+                              alt={detail.productName}
+                              className="product-image"
+                            />
+                            <div className="product-info">
+                              <span className="product-name">{detail.productName}</span>
+                              <span>Quantity: {detail.quantity}</span>
+                              <span>Price: {detail.price}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </React.Fragment>
           ))}
         </tbody>
       </table>
@@ -82,8 +105,6 @@ const Order = () => {
         >
           &lt;
         </button>
-
-        {/* Dynamically render pagination buttons */}
         {[...Array(totalPages)].map((_, index) => (
           <button
             key={index + 1}
@@ -93,7 +114,6 @@ const Order = () => {
             {index + 1}
           </button>
         ))}
-
         <button
           className="prev-next"
           onClick={() => paginate(currentPage + 1)}

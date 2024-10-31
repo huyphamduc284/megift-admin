@@ -8,7 +8,7 @@ const Review = () => {
 
   useEffect(() => {
     // Fetch review data from API
-    fetch('https://localhost:7249/api/review')
+    fetch('https://localhost:7249/api/Reviews')
       .then((response) => response.json())
       .then((data) => setReviews(data))
       .catch((error) => console.error('Error fetching review data:', error));
@@ -100,36 +100,30 @@ const Review = () => {
     <div className="review-container">
       <div className="review-header">
         <h1>Reviews</h1>
-        <div className="search-container">
-          <input type="text" placeholder="Search reviews" />
-        </div>
       </div>
       <table className="review-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Review</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentReviews.map((review) => (
-            <tr key={review.id}>
-              <td>
-                <div className="review-image">
-                  <img src={review.image} alt={review.name} />
-                </div>
-              </td>
-              <td>{review.name}</td>
-              <td>{review.review}</td>
-              <td>
-                <button className="action-button">...</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Customer</th>
+      <th>Rating</th>
+      <th>Review</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {currentReviews.map((review) => (
+      <tr key={review.reviewId}>
+        <td>{review.product}</td>
+        <td>{review.customer}</td>
+        <td>{review.rating}</td>
+        <td>{review.comment}</td>
+        <td>{new Date(review.reviewDate).toLocaleDateString()}</td> 
+      </tr>
+    ))}
+  </tbody>
+</table>
+
       <div className="pagination">
         <button
           className="prev-next"

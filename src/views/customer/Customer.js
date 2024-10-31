@@ -8,7 +8,7 @@ const Customer = () => {
 
   useEffect(() => {
     // Fetch customer data from API
-    fetch('https://localhost:7249/api/customer')
+    fetch('https://localhost:7249/api/Customers')
       .then((response) => response.json())
       .then((data) => setCustomers(data))
       .catch((error) => console.error('Error fetching customer data:', error));
@@ -28,7 +28,7 @@ const Customer = () => {
     const buttons = [];
     const siblingCount = 1; // Pages to show before and after the current page
     const totalNumbersToShow = siblingCount * 2 + 3; // Pages around current, including the first/last
-    
+
     if (totalPages <= totalNumbersToShow) {
       // Show all pages if the total is less than the numbers we want to display
       for (let i = 1; i <= totalPages; i++) {
@@ -99,38 +99,35 @@ const Customer = () => {
     <div className="customer-container">
       <div className="customer-header">
         <h1>Customers</h1>
-        <div className="search-container">
-          <input type="text" placeholder="Search customers" />
-        </div>
       </div>
       <table className="customer-table">
         <thead>
           <tr>
-            <th></th>
             <th>Name</th>
+            <th>Username</th>
             <th>Email</th>
-            <th>Shipping Address</th>
-            <th>Action</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Created At</th>
+            <th>Last Login</th>
           </tr>
         </thead>
         <tbody>
           {currentCustomers.map((customer) => (
-            <tr key={customer.id}>
-              <td>
-                <div className="customer-image">
-                  <img src={customer.image} alt={customer.name} />
-                </div>
-              </td>
+            <tr key={customer.customerId}>
               <td>{customer.name}</td>
-              <td>{customer.email}</td>
-              <td>{customer.shippingAddress}</td>
-              <td>
-                <button className="action-button">...</button>
-              </td>
+              <td>{customer.username}</td>
+              <td>{customer.email || 'N/A'}</td>
+              <td>{customer.phoneNumber || 'N/A'}</td>
+              <td>{customer.address}</td>
+              <td>{new Date(customer.createdAt).toLocaleDateString()}</td>
+              <td>{new Date(customer.lastLogin).toLocaleDateString()}</td>
             </tr>
           ))}
         </tbody>
       </table>
+
+
       <div className="pagination">
         <button
           className="prev-next"

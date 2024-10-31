@@ -11,7 +11,7 @@ const Product = () => {
   const itemsPerPage = 4;
 
   useEffect(() => {
-    fetch('https://localhost:7249/api/Product')
+    fetch('https://localhost:7249/api/Products')
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error('Error fetching product data:', error));
@@ -115,36 +115,35 @@ const Product = () => {
         </div>
       )}
 
-      <table className="product-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>SKU</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentProducts.map((product) => (
-            <tr key={product.id}>
-              <td>
-                <div className="product-image">
-                  <img src={product.image} alt={product.name} />
-                </div>
-              </td>
-              <td>{product.name}</td>
-              <td>{product.sku}</td>
-              <td>{product.price}</td>
-              <td>{product.stock}</td>
-              <td>
-                <button className="action-button">...</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+<table className="product-table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {currentProducts.map((product) => (
+      <tr key={product.productId}>
+        <td>
+          <div className="product-image">
+            <img src={product.imageUrl} alt={product.productName} />
+          </div>
+        </td>
+        <td>{product.productName}</td>
+        <td>{product.category}</td>
+        <td>{product.price}</td>
+        <td>{product.stockQuantity}</td>
+        <td>{product.description}</td> 
+      </tr>
+    ))}
+  </tbody>
+</table>
+
 
       <div className="pagination">
         <button

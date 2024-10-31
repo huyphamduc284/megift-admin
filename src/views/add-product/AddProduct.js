@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
+import { toast } from 'react-toastify'; // Import toast từ react-toastify
 import './AddProduct.scss';
 
 const AddProduct = () => {
   const [formData, setFormData] = useState({
     title: '',
     price: '',
+<<<<<<< HEAD
     category: '',
     description: '',
     stockQuantity: '',
+=======
+    slug: '',
+    sku: '',
+    description: '',
+>>>>>>> c64f44606fa98d3dd8bb49d7fa6dd8044d8bd891
     images: [],
     colors: [],
     sizes: []
@@ -16,7 +24,10 @@ const AddProduct = () => {
 
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
-  
+  const [errorMessage, setErrorMessage] = useState(''); // Thông báo lỗi nếu có
+
+  const navigate = useNavigate(); // Để điều hướng về trang danh sách sản phẩm
+
   const availableSizes = ['S', 'M', 'X', 'XL', 'XXL'];
   const availableColors = [
     { name: 'Light Blue', code: '#B6D0E2' },
@@ -25,6 +36,7 @@ const AddProduct = () => {
     { name: 'Blue', code: '#4169E1' }
   ];
 
+  // Handle input change for text fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -33,15 +45,16 @@ const AddProduct = () => {
     }));
   };
 
+  // Handle image file uploads
   const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    const imageUrls = files.map(file => URL.createObjectURL(file));
+    const files = Array.from(e.target.files); // Capture the files
     setFormData(prev => ({
       ...prev,
-      images: [...prev.images, ...imageUrls]
+      images: [...prev.images, ...files] // Store the actual file objects
     }));
   };
 
+  // Remove an image by index
   const removeImage = (indexToRemove) => {
     setFormData(prev => ({
       ...prev,
@@ -49,6 +62,7 @@ const AddProduct = () => {
     }));
   };
 
+  // Toggle selected size
   const toggleSize = (size) => {
     setSelectedSizes(prev => 
       prev.includes(size)
@@ -57,6 +71,7 @@ const AddProduct = () => {
     );
   };
 
+  // Toggle selected color
   const toggleColor = (color) => {
     setSelectedColors(prev =>
       prev.includes(color)
@@ -65,20 +80,53 @@ const AddProduct = () => {
     );
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submission to call API
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const productData = {
-      ...formData,
-      sizes: selectedSizes,
-      colors: selectedColors
-    };
-    console.log('Submitting product:', productData);
-    // Add your API call here
+
+    // Clear previous messages
+    setErrorMessage('');
+
+    // Create FormData object to hold all the product data
+    const formDataToSubmit = new FormData();
+    formDataToSubmit.append('Name', formData.title);
+    formDataToSubmit.append('Price', formData.price);
+    formDataToSubmit.append('Sku', formData.sku);
+    formDataToSubmit.append('Slug', formData.slug);
+    formDataToSubmit.append('Description', formData.description);
+    formDataToSubmit.append('Colors', selectedColors.join(',')); // Join colors to a comma-separated string
+    formDataToSubmit.append('Size', selectedSizes.join(',')); // Join sizes to a comma-separated string
+
+    // Append images to FormData
+    for (let i = 0; i < formData.images.length; i++) {
+      formDataToSubmit.append('Images', formData.images[i]);
+    }
+
+    try {
+      const response = await fetch('https://localhost:7249/api/Product', {
+        method: 'POST',
+        body: formDataToSubmit
+      });
+
+      if (response.ok) {
+        // Hiển thị toast thông báo thành công
+        toast.success('Product added successfully!');
+        // Điều hướng về trang danh sách sản phẩm sau khi thêm thành công
+        navigate('/product');
+      } else {
+        setErrorMessage('Failed to add product. Please try again.');
+      }
+    } catch (error) {
+      setErrorMessage('Error adding product: ' + error.message);
+    }
   };
 
   return (
     <div className="add-product-container">
       <h1>Add Product</h1>
+
+      {/* Thông báo lỗi nếu có */}
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
       
       <form onSubmit={handleSubmit}>
         <div className="form-grid">
@@ -105,17 +153,29 @@ const AddProduct = () => {
           </div>
 
           <div className="form-group">
+<<<<<<< HEAD
             <label>Category</label>
             <input
               type="text"
               name="category"
               value={formData.category}
+=======
+            <label>Slug</label>
+            <input
+              type="text"
+              name="slug"
+              value={formData.slug}
+>>>>>>> c64f44606fa98d3dd8bb49d7fa6dd8044d8bd891
               onChange={handleInputChange}
             />
           </div>
 
           <div className="form-group">
+<<<<<<< HEAD
             <label>Stock Quantity</label>
+=======
+            <label>SKU</label>
+>>>>>>> c64f44606fa98d3dd8bb49d7fa6dd8044d8bd891
             <input
               type="text"
               name="sku"
@@ -152,7 +212,7 @@ const AddProduct = () => {
             <div className="image-preview-container">
               {formData.images.map((image, index) => (
                 <div key={index} className="image-preview">
-                  <img src={image} alt={`Product ${index + 1}`} />
+                  <img src={URL.createObjectURL(image)} alt={`Product ${index + 1}`} />
                   <button
                     type="button"
                     className="remove-image"

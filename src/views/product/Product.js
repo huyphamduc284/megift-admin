@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // Thêm useLocation để nhận thông báo sau khi thêm sản phẩm
 import { Plus } from 'lucide-react';
 import './Product.scss';
 
 const Product = () => {
   const navigate = useNavigate();
+  const location = useLocation(); // Để nhận thông báo từ trang thêm sản phẩm
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
@@ -97,9 +98,6 @@ const Product = () => {
       <div className="product-header">
         <h1>Products</h1>
         <div className="header-actions">
-          <div className="search-container">
-            <input type="text" placeholder="Search products" />
-          </div>
           <button 
             onClick={handleAddProduct}
             className="add-button"
@@ -109,6 +107,14 @@ const Product = () => {
           </button>
         </div>
       </div>
+
+      {/* Hiển thị thông báo nếu quay lại từ trang thêm sản phẩm */}
+      {location.state?.message && (
+        <div className="success-message">
+          {location.state.message}
+        </div>
+      )}
+
       <table className="product-table">
         <thead>
           <tr>
@@ -139,6 +145,7 @@ const Product = () => {
           ))}
         </tbody>
       </table>
+
       <div className="pagination">
         <button
           className="prev-next"

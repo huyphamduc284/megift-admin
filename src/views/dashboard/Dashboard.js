@@ -391,6 +391,7 @@ import Customers from './Customers';
 import Orders from './Orders';
 import BestSelling from './BestSelling';
 import RecentOrders from './RecentOrders';
+import PaymentMethods from './PaymentMethods';
 import './Dashboard.scss';
 
 const Dashboard = () => {
@@ -404,6 +405,7 @@ const Dashboard = () => {
         <Customers />
         <Orders />
         <BestSelling />
+        <PaymentMethods />
         <RecentOrders />
       </div>
     </div>

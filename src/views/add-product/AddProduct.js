@@ -8,9 +8,15 @@ const AddProduct = () => {
   const [formData, setFormData] = useState({
     title: '',
     price: '',
+<<<<<<< HEAD
+    category: '',
+    description: '',
+    stockQuantity: '',
+=======
     slug: '',
     sku: '',
     description: '',
+>>>>>>> c64f44606fa98d3dd8bb49d7fa6dd8044d8bd891
     images: [],
     colors: [],
     sizes: []
@@ -147,21 +153,33 @@ const AddProduct = () => {
           </div>
 
           <div className="form-group">
+<<<<<<< HEAD
+            <label>Category</label>
+            <input
+              type="text"
+              name="category"
+              value={formData.category}
+=======
             <label>Slug</label>
             <input
               type="text"
               name="slug"
               value={formData.slug}
+>>>>>>> c64f44606fa98d3dd8bb49d7fa6dd8044d8bd891
               onChange={handleInputChange}
             />
           </div>
 
           <div className="form-group">
+<<<<<<< HEAD
+            <label>Stock Quantity</label>
+=======
             <label>SKU</label>
+>>>>>>> c64f44606fa98d3dd8bb49d7fa6dd8044d8bd891
             <input
               type="text"
               name="sku"
-              value={formData.sku}
+              value={formData.stockQuantity}
               onChange={handleInputChange}
               required
             />

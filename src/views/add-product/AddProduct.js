@@ -7,11 +7,8 @@ const AddProduct = () => {
     title: '',
     price: '',
     category: '',
-    slug: '',
-    sku: '',
     description: '',
-    stockStatus: '',
-    availableQuantity: '',
+    stockQuantity: '',
     images: [],
     colors: [],
     sizes: []
@@ -97,33 +94,11 @@ const AddProduct = () => {
           </div>
 
           <div className="form-group">
-            <label>Stock status</label>
-            <input
-              type="text"
-              name="stockStatus"
-              value={formData.stockStatus}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
             <label>Price</label>
             <input
               type="number"
               name="price"
               value={formData.price}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Available quantity</label>
-            <input
-              type="number"
-              name="availableQuantity"
-              value={formData.availableQuantity}
               onChange={handleInputChange}
               required
             />
@@ -140,21 +115,11 @@ const AddProduct = () => {
           </div>
 
           <div className="form-group">
-            <label>Slug</label>
-            <input
-              type="text"
-              name="slug"
-              value={formData.slug}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>SKU</label>
+            <label>Stock Quantity</label>
             <input
               type="text"
               name="sku"
-              value={formData.sku}
+              value={formData.stockQuantity}
               onChange={handleInputChange}
               required
             />

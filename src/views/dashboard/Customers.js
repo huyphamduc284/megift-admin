@@ -2,13 +2,13 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const data = [
-  { name: '1', value: 4000 },
-  { name: '5', value: 3000 },
-  { name: '10', value: 2000 },
-  { name: '15', value: 2780 },
-  { name: '20', value: 1890 },
-  { name: '25', value: 2390 },
-  { name: '30', value: 3490 },
+  { day: '01', value: 85 },
+  { day: '02', value: 92 },
+  { day: '03', value: 78 },
+  { day: '04', value: 88 },
+  { day: '05', value: 95 },
+  { day: '06', value: 86 },
+  { day: '07', value: 91 }
 ];
 
 const Customers = () => {
@@ -16,7 +16,7 @@ const Customers = () => {
     <div className="dashboard-card customers">
       <h2>Customers</h2>
       <div className="customer-count">2,571</div>
-      <div className="subtitle">THIS MONTH</div>
+      <div className="subtitle">TODAY</div>
       <div className="chart-container">
         <ResponsiveContainer width="100%" height={100}>
           <LineChart data={data}>

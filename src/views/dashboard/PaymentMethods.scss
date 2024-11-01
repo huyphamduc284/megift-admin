@@ -1,0 +1,39 @@
+.dashboard-card.payment-methods {
+    padding: 20px;
+    text-align: center;
+  
+    .total-sales {
+      font-size: 1.2em;
+      margin: 0.5em 0;
+    }
+  
+    .legend {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1em;
+      
+      .legend-item {
+        display: flex;
+        align-items: center;
+        margin: 0.5em;
+        
+        .dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          margin-right: 0.5em;
+        }
+        
+        .method-info {
+          font-size: 0.9em;
+          margin-right: 0.5em;
+        }
+  
+        .sales-count {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  

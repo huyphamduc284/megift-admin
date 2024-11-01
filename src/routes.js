@@ -64,7 +64,7 @@ const routes = [
   { path: '/product', name: 'Product', element: Product},
   { path: '/add-product', name: 'Add Product', element: AddProduct},
   { path: '/review', name: 'Review', element: Review},
-  { path: '/customer', name: 'Review', element: Customer},
+  { path: '/customer', name: 'Customer', element: Customer},
   {path: '/setting',name:'Settings', element: Settings},
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },

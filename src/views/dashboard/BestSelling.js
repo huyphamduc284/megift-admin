@@ -1,62 +1,57 @@
-import React from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-
-const data = [
-  { name: 'Nhẫn - N0001', value: 1000, color: '#0088FE' },
-  { name: 'Dây Chuyền - DC0003', value: 790, color: '#00C49F' },
-  { name: 'Dây Chuyền - DC1231', value: 740, color: '#FFBB28' },
-];
-
-const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
+import React, { useEffect, useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell, LabelList } from 'recharts';
+import './BestSelling.scss';
 
 const BestSelling = () => {
-  const totalSales = data.reduce((sum, item) => sum + item.value, 0);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('https://localhost:7249/api/Dashboards/best-selling')
+      .then((response) => response.json())
+      .then((data) => {
+        const topData = data.slice(0, 10); // Lấy top 10 sản phẩm
+        setData(topData);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching best selling data:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="dashboard-card best-selling">
-      <h2>Best Selling</h2>
-      <div className="subtitle">THIS MONTH</div>
-      <div className="total-sales">{totalSales.toLocaleString()}đ</div>
-      <div className="subtitle">Total Sales</div>
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={200}>
-          <PieChart>
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              label={renderCustomizedLabel}
-              outerRadius={80}
-              fill="#8884d8"
-              dataKey="value"
-            >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} />
-              ))}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-      <ul className="legend">
-        {data.map((item, index) => (
-          <li key={index}>
-            <span className="dot" style={{ backgroundColor: item.color }}></span>
-            {item.name} - {item.value} Sales
-          </li>
-        ))}
-      </ul>
+      <h2>Top 10 Best Selling Products</h2>
+      <ResponsiveContainer width="100%" height={350}>
+        <BarChart data={data} layout="vertical" margin={{ top: 20, right: 40, left: 20, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+          <XAxis type="number" />
+          <YAxis dataKey="name" type="category" width={150} tick={{ fontSize: 14 }} />
+          <Tooltip 
+            contentStyle={{ backgroundColor: '#333', color: '#fff', borderRadius: '8px', border: 'none' }}
+            itemStyle={{ color: '#fff' }}
+            cursor={{ fill: 'rgba(200, 200, 200, 0.2)' }}
+          />
+          <Bar dataKey="sales" radius={[10, 10, 0, 0]}>
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={`url(#colorUv${index})`} />
+            ))}
+            <LabelList dataKey="sales" position="right" style={{ fill: '#333', fontSize: 12 }} />
+          </Bar>
+          {/* Define gradient once and reuse */}
+          <defs>
+            {data.map((_, index) => (
+              <linearGradient id={`colorUv${index}`} x1="0" y1="0" x2="1" y2="0" key={index}>
+                <stop offset="5%" stopColor="#84d8d0" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#8884d8" stopOpacity={1} />
+              </linearGradient>
+            ))}
+          </defs>
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 };

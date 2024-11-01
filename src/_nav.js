@@ -43,12 +43,6 @@ const _nav = [
     to: '/review',
     icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
   },
-  // {
-  //   component: CNavItem,
-  //   name: 'Settings',
-  //   to: '/setting',
-  //   icon: <CIcon icon={cilSettings} customClassName="nav-icon" />,
-  // }
 ]
 
 export default _nav

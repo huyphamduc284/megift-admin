@@ -8,7 +8,7 @@ const Product = () => {
   const location = useLocation(); // Để nhận thông báo từ trang thêm sản phẩm
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     fetch('https://localhost:7249/api/Products')

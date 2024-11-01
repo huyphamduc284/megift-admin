@@ -1,0 +1,42 @@
+.dashboard-card.best-selling {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+  
+    h2 {
+      font-size: 1.5em;
+      margin-bottom: 1em;
+    }
+  
+    .total-sales {
+      font-size: 1.2em;
+      margin: 0.5em 0;
+      color: #333;
+    }
+  
+    .legend {
+      margin-top: 1em;
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      
+      li {
+        display: flex;
+        align-items: center;
+        font-size: 0.9em;
+      }
+      
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 0.5em;
+      }
+    }
+  }
+  

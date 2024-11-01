@@ -1,0 +1,40 @@
+.dashboard-card.orders {
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  
+    h2 {
+      font-size: 1.5em;
+      color: #333;
+      margin-bottom: 0.5em;
+    }
+  
+    .order-count {
+      font-size: 2.5em;
+      font-weight: bold;
+      color: #2c3e50;
+      margin: 0.5em 0;
+    }
+  
+    .progress-bar {
+      height: 12px;
+      background-color: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 1em 0;
+  
+      .progress {
+        height: 100%;
+        border-radius: 10px 0 0 10px;
+      }
+    }
+  
+    .goal {
+      font-size: 1em;
+      color: #7f8c8d;
+      margin-top: 1em;
+    }
+  }
+  

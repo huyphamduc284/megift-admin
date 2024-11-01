@@ -1,0 +1,29 @@
+.customers-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  
+    h2 {
+      font-size: 1.5em;
+      margin-bottom: 1em;
+    }
+  
+    .summary-item {
+      padding: 12px;
+      border-radius: 8px;
+      background-color: #f5f5f5;
+      
+      h3 {
+        font-size: 1.2em;
+        margin: 0.5em 0;
+      }
+  
+      p {
+        font-size: 1.6em;
+        font-weight: bold;
+        color: #333;
+      }
+    }
+  }
+  
